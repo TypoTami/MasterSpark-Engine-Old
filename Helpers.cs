@@ -29,7 +29,11 @@ namespace raylibTouhou
             Raylib.DrawTexturePro(atlas, frameRect, destRect, origin, 0.0f, Color.WHITE);
         }
 
-        public static bool InBetween(float lower, float upper, float number)
+        public static bool InBetweenFloat(float lower, float upper, float number)
+        {
+            return (lower <= number && number <= upper);
+        }
+        public static bool InBetweenInt(int lower, int upper, int number)
         {
             return (lower <= number && number <= upper);
         }

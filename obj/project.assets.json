@@ -2,6 +2,18 @@
   "version": 3,
   "targets": {
     "net5.0": {
+      "Bezier/0.9.4": {
+        "type": "package",
+        "dependencies": {
+          "System.Numerics.Vectors": "4.1.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/System.Geometry.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/System.Geometry.dll": {}
+        }
+      },
       "Raylib-cs/3.1.5": {
         "type": "package",
         "dependencies": {
@@ -55,6 +67,24 @@
     }
   },
   "libraries": {
+    "Bezier/0.9.4": {
+      "sha512": "6U28dgR6soRPIwUxwNIIq6qj/R6EySnu2r8cp1/MWMwIye2i6RaRXdRRx8OqTAAj4Jl9k9sV3nWJCizxQGAITA==",
+      "type": "package",
+      "path": "bezier/0.9.4",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "bezier.0.9.4.nupkg.sha512",
+        "bezier.nuspec",
+        "icon.png",
+        "lib/netstandard1.0/System.Geometry.dll",
+        "lib/netstandard1.0/System.Geometry.xml",
+        "lib/netstandard1.6/System.Geometry.dll",
+        "lib/netstandard1.6/System.Geometry.xml",
+        "lib/netstandard2.0/System.Geometry.dll",
+        "lib/netstandard2.0/System.Geometry.xml"
+      ]
+    },
     "Raylib-cs/3.1.5": {
       "sha512": "rzv7rmxb+p/D9/ojlMsg5EZdBki/DO6lOQsVlDqTtACvyDZ3MqgaKZl9gGKJJOIl9G/zkoegDdE+IrrHM7i/IQ==",
       "type": "package",
@@ -127,6 +157,7 @@
   },
   "projectFileDependencyGroups": {
     "net5.0": [
+      "Bezier >= 0.9.4",
       "Raylib-cs >= 3.1.5"
     ]
   },
@@ -167,6 +198,10 @@
       "net5.0": {
         "targetAlias": "net5.0",
         "dependencies": {
+          "Bezier": {
+            "target": "Package",
+            "version": "[0.9.4, )"
+          },
           "Raylib-cs": {
             "target": "Package",
             "version": "[3.1.5, )"

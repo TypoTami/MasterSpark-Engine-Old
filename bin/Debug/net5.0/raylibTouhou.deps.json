@@ -8,10 +8,22 @@
     ".NETCoreApp,Version=v5.0": {
       "raylibTouhou/1.0.0": {
         "dependencies": {
+          "Bezier": "0.9.4",
           "Raylib-cs": "3.1.5"
         },
         "runtime": {
           "raylibTouhou.dll": {}
+        }
+      },
+      "Bezier/0.9.4": {
+        "dependencies": {
+          "System.Numerics.Vectors": "4.5.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/System.Geometry.dll": {
+            "assemblyVersion": "0.9.4.0",
+            "fileVersion": "0.9.4.0"
+          }
         }
       },
       "Raylib-cs/3.1.5": {
@@ -60,6 +72,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "Bezier/0.9.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-6U28dgR6soRPIwUxwNIIq6qj/R6EySnu2r8cp1/MWMwIye2i6RaRXdRRx8OqTAAj4Jl9k9sV3nWJCizxQGAITA==",
+      "path": "bezier/0.9.4",
+      "hashPath": "bezier.0.9.4.nupkg.sha512"
     },
     "Raylib-cs/3.1.5": {
       "type": "package",

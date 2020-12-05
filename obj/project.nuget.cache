@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "3KVPT1Na4XUBml0IOmhp1KDEVQqt16iTaFFZKRmqO+2KbglVedMqEPvLBR3qP88NaQ24IRV6EfIYjIg1LvK56g==",
+  "dgSpecHash": "OiFnBwjsJNGPEMW6VPNHDs8JwX4fCMhOvZkyy5ROIWZka0V6GrQl6c5K74JTGijLDanrqTrbn4Ro5SXXIqNWxg==",
   "success": true,
   "projectFilePath": "D:\\UserData\\Documents\\Programming\\raylibTouhou\\raylibTouhou.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\tombu\\.nuget\\packages\\bezier\\0.9.4\\bezier.0.9.4.nupkg.sha512",
     "C:\\Users\\tombu\\.nuget\\packages\\raylib-cs\\3.1.5\\raylib-cs.3.1.5.nupkg.sha512",
     "C:\\Users\\tombu\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512"
   ],

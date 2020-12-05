@@ -6,11 +6,7 @@ D:\UserData\Documents\Programming\raylibTouhou\bin\Debug\net5.0\raylibTouhou.dll
 D:\UserData\Documents\Programming\raylibTouhou\bin\Debug\net5.0\ref\raylibTouhou.dll
 D:\UserData\Documents\Programming\raylibTouhou\bin\Debug\net5.0\raylibTouhou.pdb
 D:\UserData\Documents\Programming\raylibTouhou\bin\Debug\net5.0\Raylib-cs.dll
-D:\UserData\Documents\Programming\raylibTouhou\bin\Debug\net5.0\runtimes\linux-x64\native\libraylib.so
-D:\UserData\Documents\Programming\raylibTouhou\bin\Debug\net5.0\runtimes\linux-x86\native\libraylib.so
-D:\UserData\Documents\Programming\raylibTouhou\bin\Debug\net5.0\runtimes\osx-x64\native\libraylib.dylib
 D:\UserData\Documents\Programming\raylibTouhou\bin\Debug\net5.0\runtimes\win-x64\native\raylib.dll
-D:\UserData\Documents\Programming\raylibTouhou\bin\Debug\net5.0\runtimes\win-x86\native\raylib.dll
 D:\UserData\Documents\Programming\raylibTouhou\obj\Debug\net5.0\raylibTouhou.csprojAssemblyReference.cache
 D:\UserData\Documents\Programming\raylibTouhou\obj\Debug\net5.0\raylibTouhou.GeneratedMSBuildEditorConfig.editorconfig
 D:\UserData\Documents\Programming\raylibTouhou\obj\Debug\net5.0\raylibTouhou.AssemblyInfoInputs.cache
@@ -21,3 +17,8 @@ D:\UserData\Documents\Programming\raylibTouhou\obj\Debug\net5.0\raylibTouhou.dll
 D:\UserData\Documents\Programming\raylibTouhou\obj\Debug\net5.0\ref\raylibTouhou.dll
 D:\UserData\Documents\Programming\raylibTouhou\obj\Debug\net5.0\raylibTouhou.pdb
 D:\UserData\Documents\Programming\raylibTouhou\obj\Debug\net5.0\raylibTouhou.genruntimeconfig.cache
+D:\UserData\Documents\Programming\raylibTouhou\bin\Debug\net5.0\System.Geometry.dll
+D:\UserData\Documents\Programming\raylibTouhou\bin\Debug\net5.0\runtimes\linux-x64\native\libraylib.so
+D:\UserData\Documents\Programming\raylibTouhou\bin\Debug\net5.0\runtimes\linux-x86\native\libraylib.so
+D:\UserData\Documents\Programming\raylibTouhou\bin\Debug\net5.0\runtimes\osx-x64\native\libraylib.dylib
+D:\UserData\Documents\Programming\raylibTouhou\bin\Debug\net5.0\runtimes\win-x86\native\raylib.dll

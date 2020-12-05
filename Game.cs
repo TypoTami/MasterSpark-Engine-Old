@@ -9,27 +9,46 @@ namespace raylibTouhou
     {
         public static int frame = 0;
         static Player player;
-        static Queue<Bullet> bullets = new Queue<Bullet>();
+        static Queue<LinearBullet> ActiveBullets = new Queue<LinearBullet>();
         public static Vector2 PlayAreaOrigin = new Vector2(40, 40);
         public static Vector2 PlayAreaSize = new Vector2(440, 520);
-        private static Random random = new Random();
+        public static Random random = new Random();
+        static Path testPath;
         public static void Init()
         {
-
             // Create the player
             player = new Player("Reimu");
+
+            Vector2[] testPoints = new Vector2[] {
+                new Vector2(90, 30),
+                new Vector2(130, 100),
+                new Vector2(180, 70),
+                new Vector2(230, 120),
+                new Vector2(305, 280),
+                new Vector2(295, 320),
+                new Vector2(260, 360),
+                new Vector2(160, 420)
+            };
+            string[] testSegments = new string[] {
+                "BEZIER",
+                "BEZIER",
+                "LINE"                
+            };
+            testPath = new Path(testPoints, testSegments);
         }
         public static void MainLoop()
         {
-
-            if (frame % 30 == 0)
+            if (frame % 1 == 0)
             {
-                bullets.Enqueue(
-                    new Bullet(
-                        new Vector2(random.Next(200, 300), random.Next(200, 300)),
-                        new Vector2((random.Next(-10, 10)/5.0f), (random.Next(-10, 10)/2.5f))
-                    )
-                );
+                for (int i = 0; i < 5; i++)
+                {
+                    ActiveBullets.Enqueue(
+                        new LinearBullet(
+                            new Vector2((float)Math.Sin(Raylib.GetTime() * 10) * 10  + 240f, 50f),
+                            new Vector2((random.Next(-10, 10)/7.0f), (random.Next(8, 10)/3.5f))
+                        )
+                    );
+                }
             }
 
             player.Update();
@@ -37,28 +56,28 @@ namespace raylibTouhou
             Draw();
             frame++;
         }
-
         private static void Draw()
         {
-            Raylib.BeginDrawing();
-            Raylib.ClearBackground(Color.GRAY);
+            Raylib.ClearBackground(Color.BLACK);
 
             Raylib.DrawRectangleV(PlayAreaOrigin, PlayAreaSize, Color.LIGHTGRAY);
 
-            for (int i = 0; bullets.Count > i; i++)
+            for (int i = 0; ActiveBullets.Count > i; i++)
             {
-                Bullet current = bullets.Dequeue();
+                LinearBullet current = ActiveBullets.Dequeue();
                 if (current.UpdateDraw())
                 {
-                    bullets.Enqueue(current);
+                    ActiveBullets.Enqueue(current);
                 }
             }
 
+            testPath.Draw(new Vector2(100, 100));
+
             player.Draw();
 
-            Raylib.DrawText($"Active bullets: \t{bullets.Count}\n {PlayAreaOrigin}, {PlayAreaSize}", 10, 10, 20, Color.BLACK);
-
-            Raylib.EndDrawing();
+            Raylib.DrawText($"Active bullets: \t{ActiveBullets.Count}\n {PlayAreaOrigin}, {PlayAreaSize}", 10, 40, 20, Color.RED);
+            
+            Raylib.DrawFPS(10, 10);
         }
     }
 }
