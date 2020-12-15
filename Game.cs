@@ -34,24 +34,32 @@ namespace raylibTouhou
                 "BEZIER",
                 "LINE"                
             };
-            testPath = new Path(testPoints, testSegments);
+            testPath = new Path(testPoints, testSegments, new Vector2(100, 100), 0.0f);
         }
         public static void MainLoop()
         {
-            if (frame % 1 == 0)
-            {
-                for (int i = 0; i < 5; i++)
-                {
-                    ActiveBullets.Enqueue(
-                        new LinearBullet(
-                            new Vector2((float)Math.Sin(Raylib.GetTime() * 10) * 10  + 240f, 50f),
-                            new Vector2((random.Next(-10, 10)/7.0f), (random.Next(8, 10)/3.5f))
-                        )
-                    );
-                }
-            }
+            // if (frame % 5 == 0)
+            // {
+            //     for (int i = 0; i < 10; i++)
+            //     {
+            //         ActiveBullets.Enqueue(
+            //             new LinearBullet(
+            //                 new Vector2((float)Math.Sin(Raylib.GetTime() * 10) * 10  + 240f, 50f),
+            //                 new Vector2((random.Next(-10, 10)/7.0f), (random.Next(8, 10)/3.5f))
+            //             )
+            //         );
+            //     }
+            // }
 
             player.Update();
+            
+            testPath.Origin = new Vector2(
+                (float)Math.Sin(Raylib.GetTime() * 1f) * 75f + 100,
+                (float)Math.Cos(Raylib.GetTime() * 1f) * 50f + 100
+            );
+            testPath.Rotation = ((float)Math.Sin(Raylib.GetTime() * 1f) * 0.8f) + 0f;
+            testPath.Scale = ((float)Math.Cos(Raylib.GetTime() * 0.85f) * 0.1f) + 0.9f;
+            testPath.Update();
 
             Draw();
             frame++;
@@ -60,7 +68,7 @@ namespace raylibTouhou
         {
             Raylib.ClearBackground(Color.BLACK);
 
-            Raylib.DrawRectangleV(PlayAreaOrigin, PlayAreaSize, Color.LIGHTGRAY);
+            // Raylib.DrawRectangleV(PlayAreaOrigin, PlayAreaSize, Color.LIGHTGRAY);
 
             for (int i = 0; ActiveBullets.Count > i; i++)
             {
@@ -70,14 +78,13 @@ namespace raylibTouhou
                     ActiveBullets.Enqueue(current);
                 }
             }
-
-            testPath.Draw(new Vector2(100, 100));
+            testPath.Draw();
 
             player.Draw();
 
             Raylib.DrawText($"Active bullets: \t{ActiveBullets.Count}\n {PlayAreaOrigin}, {PlayAreaSize}", 10, 40, 20, Color.RED);
             
-            Raylib.DrawFPS(10, 10);
+            Raylib.DrawText($"FPS: {Raylib.GetFPS()}\t FrameTime: {Raylib.GetFrameTime()}", 10, 10, 20, Color.GREEN);
         }
     }
 }

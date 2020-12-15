@@ -9,7 +9,7 @@ namespace raylibTouhou
         static void Main(string[] args)
         {
             // Create our window
-            Raylib.InitWindow(800, 600, "RaylibTouhou");
+            Raylib.InitWindow(800, 600, "RaylibDanmaku");
             
             Raylib.SetTargetFPS(60);
 
@@ -20,18 +20,21 @@ namespace raylibTouhou
             {
                 Raylib.BeginDrawing();
                 
-                switch (CurrentScene)
-                {
-                    case "MENU":
-                        Menu.MainLoop();
-                        break;
-                    case "GAME":
-                        Game.MainLoop();
-                        break;
-                    case "EDITOR":
-                        Editor.MainLoop();
-                        break;
-                }
+                //  This is super jank, fix it.
+                // switch (CurrentScene)
+                // {
+                //     case "MENU":
+                //         Menu.MainLoop();
+                //         break;
+                //     case "GAME":
+                //         Game.MainLoop();
+                //         break;
+                //     case "EDITOR":
+                //         Editor.MainLoop();
+                //         break;
+                // }
+
+                Game.MainLoop();
 
                 Raylib.EndDrawing();
             }

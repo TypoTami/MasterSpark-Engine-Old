@@ -37,5 +37,34 @@ namespace raylibTouhou
         {
             return (lower <= number && number <= upper);
         }
+
+        public static Vector2 RotTransScale(Vector2 origin, Vector2 point, float rotation, float scale = 1.0f) {
+            if (point.X == 0 && point.Y == 0) {
+                return Vector2.Add (origin, point);
+            }
+
+            float length = Vector2.Distance(origin, Vector2.Add(origin, point)) * scale;
+
+            float theta = (float)Math.Atan(point.Y/point.X);
+            
+            rotation += theta;
+
+            float x = (float)Math.Cos(rotation) * length;
+            float y = (float)Math.Sin(rotation) * length;
+
+            point = Vector2.Add(origin, new Vector2(x, y));
+
+            Raylib.DrawCircleV(origin, 5f, Color.GREEN);
+            Raylib.DrawCircleLines(Convert.ToInt32(origin.X), Convert.ToInt32(origin.Y), length, Color.RED);
+
+            Raylib.DrawCircleV(point, 5f, Color.DARKPURPLE);
+
+            return point;
+        }
+
+        public static Vector2 Position(Vector2 from, Vector2 to, float position) {
+            Vector2 point = Vector2.Multiply(Vector2.Subtract(to, from), position);
+            return Vector2.Add(point, from);
+        }
     }
 }

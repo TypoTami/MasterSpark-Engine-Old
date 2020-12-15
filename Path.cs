@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Numerics;
 using System.Geometry;
 using Raylib_cs;
@@ -7,25 +8,52 @@ namespace raylibTouhou
 {
     class Path
     {
+        private Vector2[] OriginalPoints;
         private Vector2[] Points;
         private string[] SegmentTypes;
+        public Vector2 Origin;
+        public float Rotation;
+        public float Scale;
 
-        public Path(Vector2[] points, string[] segmentTypes)
+        public Path(Vector2[] originalPointsInit, string[] segmentTypesInit, Vector2 originInit, float rotationInit = 0.0f, float scaleInit = 1.0f)
         {
-            Points = points;
-            SegmentTypes = segmentTypes;
+            OriginalPoints = originalPointsInit;
+
+            for (int i = 0; OriginalPoints.Length > i; i++) {
+                OriginalPoints[i] = Vector2.Subtract(OriginalPoints[i], OriginalPoints[0]);
+            }
+            
+            Points = OriginalPoints.ToArray();
+            SegmentTypes = segmentTypesInit;
+
+            Origin = originInit;
+            Rotation = rotationInit;
+            Scale = scaleInit;
+
+            Update();
         }
-        public void Draw(Vector2 origin)
+
+        public Vector2 Position() {
+            return new Vector2(0,0);
+        }
+
+        public void Update() {
+            for (int i = 0; OriginalPoints.Length > i; i++) {
+                Points[i] = Helpers.RotTransScale(Origin, OriginalPoints[i], Rotation, Scale);
+            }
+        }
+
+        public void Draw()
         {
             int j = 0;
-            for (int i = 0; SegmentTypes.Length - 0 > i; i++)
+            for (int i = 0; SegmentTypes.Length > i; i++)
             {
                 Bezier curve;
                 if (SegmentTypes[i] == "LINE")
                 {
                     Raylib.DrawLineEx(
-                        Vector2.Add(Points[j], origin),
-                        Vector2.Add(Points[j+1], origin),
+                        Points[j],
+                        Points[j+1],
                         4.0f,
                         Color.PURPLE
                     );
@@ -34,27 +62,27 @@ namespace raylibTouhou
                 else if (SegmentTypes[i] == "BEZIER")
                 {
                     curve = new Bezier(
-                        Vector2.Add(Points[j], origin),
-                        Vector2.Add(Points[j+1], origin),
-                        Vector2.Add(Points[j+2], origin),
-                        Vector2.Add(Points[j+3], origin)
+                        Points[j],
+                        Points[j+1],
+                        Points[j+2],
+                        Points[j+3]
                     );
 
                     Raylib.DrawLineEx(
-                        Vector2.Add(Points[j], origin),
-                        Vector2.Add(Points[j+1], origin),
+                        Points[j],
+                        Points[j+1],
                         4.0f,
                         Color.BLUE
                     );
                     Raylib.DrawLineEx(
-                        Vector2.Add(Points[j+1], origin),
-                        Vector2.Add(Points[j+2], origin),
+                        Points[j+1],
+                        Points[j+2],
                         4.0f,
                         Color.RED
                     );
                     Raylib.DrawLineEx(
-                        Vector2.Add(Points[j+2], origin),
-                        Vector2.Add(Points[j+3], origin),
+                        Points[j+2],
+                        Points[j+3],
                         4.0f,
                         Color.BLUE
                     );
