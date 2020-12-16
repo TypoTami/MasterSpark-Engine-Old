@@ -2,6 +2,7 @@ using System;
 using System.Numerics;
 using System.Collections.Generic;
 using Raylib_cs;
+using ImGuiNET;
 
 namespace raylibTouhou
 {
@@ -96,6 +97,11 @@ namespace raylibTouhou
             Raylib.DrawText($"Active bullets: \t{ActiveBullets.Count}\n {PlayAreaOrigin}, {PlayAreaSize}", 10, 40, 20, Color.RED);
             
             Raylib.DrawText($"FPS: {Raylib.GetFPS()}\t FrameTime: {Raylib.GetFrameTime()}", 10, 10, 20, Color.GREEN);
+        }
+    
+        public static void SubmitUI()
+        {
+            ImGui.Text($"ActiveBullets: {ActiveBullets.Count}");
         }
     }
 }

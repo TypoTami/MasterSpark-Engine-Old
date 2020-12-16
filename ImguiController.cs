@@ -21,7 +21,10 @@ namespace raylibTouhou
         {
             context = ImGui.CreateContext();
             ImGui.SetCurrentContext(context);
-            ImGui.GetIO().Fonts.AddFontDefault();
+            ImGuiIOPtr io = ImGui.GetIO();
+            io.Fonts.AddFontDefault();
+            io.ConfigFlags = ImGuiConfigFlags.DockingEnable;
+            io.ConfigDockingWithShift = true;
         }
 
         public void Dispose()
@@ -39,6 +42,11 @@ namespace raylibTouhou
             LoadFontTexture();
             SetupInput();
             ImGui.NewFrame();
+        }
+
+        public void Resize(int width, int height)
+        {
+            size = new Vector2(width, height);
         }
 
         unsafe void LoadFontTexture()
