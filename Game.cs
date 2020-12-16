@@ -15,6 +15,14 @@ namespace raylibTouhou
         public static Random random = new Random();
         public static Texture2D BulletTexture; // Make a proper texture initialisating thing at some point!
 
+        public static float bulletX = 240f;
+        public static float bulletY = 50f;
+        public static float bulletAngle = 0f;
+        public static float bulletVelocity = 1.5f;
+        public static int bulletN = 4;
+        public static float bulletSpread = 0.5f;
+        public static float bulletAngular = 0f;
+
         public static void Init()
         {
             // Create the player
@@ -41,9 +49,9 @@ namespace raylibTouhou
         }
         public static void MainLoop()
         {
-            if (frame % 25 == 0)
+            if (frame % 5 == 0)
             {
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < bulletN; i++)
                 {
                     // ActiveBullets.Enqueue(
                     //     new LinearBullet(
@@ -54,10 +62,10 @@ namespace raylibTouhou
                     // );
                     ActiveBullets.Enqueue(
                         new LinearBullet(
-                            new Vector2(/* (float)Math.Sin(Raylib.GetTime() * 10) * 1  + */ 240f, 50f), 
-                            (float)(Math.PI/180) * 0,
-                            1.5f,
-                            (float)(Math.PI/180) * i/3f * 0.25f - -0.0035f
+                            new Vector2(/* (float)Math.Sin(Raylib.GetTime() * 10) * 1  + */ bulletX, bulletY), 
+                            (float)(Math.PI/180) * bulletAngle,
+                            bulletVelocity,
+                            (float)(Math.PI/180) * i/(float)bulletN * bulletSpread - (bulletSpread/200f) + bulletAngular
                         )
                     );
                 }
