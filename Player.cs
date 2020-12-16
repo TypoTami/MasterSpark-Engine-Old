@@ -18,6 +18,7 @@ namespace raylibTouhou
             position.Y = 300;
 
             Atlas = Raylib.LoadTexture("assets/reimu.png");
+            Raylib.GenTextureMipmaps(ref Atlas);
         }
 
         public void Update()

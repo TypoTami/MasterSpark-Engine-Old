@@ -54,17 +54,12 @@ namespace raylibTouhou
 
             point = Vector2.Add(origin, new Vector2(x, y));
 
-            Raylib.DrawCircleV(origin, 5f, Color.GREEN);
-            Raylib.DrawCircleLines(Convert.ToInt32(origin.X), Convert.ToInt32(origin.Y), length, Color.RED);
+            // Raylib.DrawCircleV(origin, 5f, Color.GREEN);
+            // Raylib.DrawCircleLines(Convert.ToInt32(origin.X), Convert.ToInt32(origin.Y), length, Color.RED);
 
-            Raylib.DrawCircleV(point, 5f, Color.DARKPURPLE);
+            // Raylib.DrawCircleV(point, 5f, Color.DARKPURPLE);
 
             return point;
-        }
-
-        public static Vector2 Position(Vector2 from, Vector2 to, float position) {
-            Vector2 point = Vector2.Multiply(Vector2.Subtract(to, from), position);
-            return Vector2.Add(point, from);
         }
     }
 }

@@ -8,13 +8,20 @@ namespace raylibTouhou
     {
         private Vector2 Position;
         private Vector2 Velocity;
+        private float AngularVelocity;
+        private float Angle;
         private Color colour;
-        // private Texture2D Atlas;
 
-        public LinearBullet(Vector2 position, Vector2 velocity)
+        public LinearBullet(Vector2 position, float angle, float velocity = 0.0f, float angularVelocity = 0.0f)
         {
             Position = position;
-            Velocity = velocity;
+            Velocity = new Vector2(
+                (float)Math.Cos(angle + (Math.PI/2)) * velocity,
+                (float)Math.Sin(angle + (Math.PI/2)) * velocity
+            );
+            AngularVelocity = angularVelocity;
+
+            Angle = angle;
 
             int hex = Game.random.Next(0x000000f, 0x00f00ff);
             colour = Raylib.GetColor(hex);
@@ -39,11 +46,23 @@ namespace raylibTouhou
         private void Update()
         {
             Position = Vector2.Add(Position, Velocity);
+            if (AngularVelocity != 0f)
+            {
+                Angle += AngularVelocity;
+                Velocity.X = (float)(Velocity.X * Math.Cos(AngularVelocity) - Velocity.Y * Math.Sin(AngularVelocity));
+                Velocity.Y = (float)(Velocity.X * Math.Sin(AngularVelocity) + Velocity.Y * Math.Cos(AngularVelocity));
+            }
         }
 
         private void Draw()
         {
-            Raylib.DrawCircleV(Position, 5.0f, colour);
+            Vector2 TexOrigin = new Vector2(
+                Position.X - (Game.BulletTexture.width / 2f) * 0.25f,
+                Position.Y - (Game.BulletTexture.height / 2f) * 0.25f
+            );
+            Raylib.DrawTextureEx(Game.BulletTexture, TexOrigin, Angle * (float)(180/Math.PI), 0.25f, Color.WHITE);  
+
+            // Raylib.DrawCircleV(Position, 5.0f, colour);
             // Raylib.DrawText($"{Position}", Convert.ToInt32(Position.X)+5, Convert.ToInt32(Position.Y)+5, 5, Color.BLACK);
             // Raylib.DrawText($"{Velocity.X}\n{Velocity.Y}", 500, 500, 5, Color.RED);
         }

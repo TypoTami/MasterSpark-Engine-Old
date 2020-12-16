@@ -13,7 +13,8 @@ namespace raylibTouhou
         public static Vector2 PlayAreaOrigin = new Vector2(40, 40);
         public static Vector2 PlayAreaSize = new Vector2(440, 520);
         public static Random random = new Random();
-        static Path testPath;
+        public static Texture2D BulletTexture; // Make a proper texture initialisating thing at some point!
+
         public static void Init()
         {
             // Create the player
@@ -32,35 +33,38 @@ namespace raylibTouhou
             string[] testSegments = new string[] {
                 "BEZIER",
                 "BEZIER",
-                "LINE"                
+                "LINE"
             };
-            testPath = new Path(testPoints, testSegments, new Vector2(100, 100), 0.0f);
+
+            BulletTexture = Raylib.LoadTexture("assets/dagger.png");
+            Raylib.GenTextureMipmaps(ref BulletTexture);
         }
         public static void MainLoop()
         {
-            // if (frame % 5 == 0)
-            // {
-            //     for (int i = 0; i < 10; i++)
-            //     {
-            //         ActiveBullets.Enqueue(
-            //             new LinearBullet(
-            //                 new Vector2((float)Math.Sin(Raylib.GetTime() * 10) * 10  + 240f, 50f),
-            //                 new Vector2((random.Next(-10, 10)/7.0f), (random.Next(8, 10)/3.5f))
-            //             )
-            //         );
-            //     }
-            // }
+            if (frame % 25 == 0)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    // ActiveBullets.Enqueue(
+                    //     new LinearBullet(
+                    //         new Vector2((float)Math.Sin(Raylib.GetTime() * 10) * 10  + 240f, 50f),
+                    //         new Vector2((random.Next(-10, 10)/7.0f), (random.Next(8, 10)/3.5f)),
+                    //         random.Next(-100, 100)/10000f
+                    //     )
+                    // );
+                    ActiveBullets.Enqueue(
+                        new LinearBullet(
+                            new Vector2(/* (float)Math.Sin(Raylib.GetTime() * 10) * 1  + */ 240f, 50f), 
+                            (float)(Math.PI/180) * 0,
+                            1.5f,
+                            (float)(Math.PI/180) * i/3f * 0.25f - -0.0035f
+                        )
+                    );
+                }
+            }
 
             player.Update();
             
-            testPath.Origin = new Vector2(
-                (float)Math.Sin(Raylib.GetTime() * 1f) * 75f + 100,
-                (float)Math.Cos(Raylib.GetTime() * 1f) * 50f + 100
-            );
-            testPath.Rotation = ((float)Math.Sin(Raylib.GetTime() * 1f) * 0.8f) + 0f;
-            testPath.Scale = ((float)Math.Cos(Raylib.GetTime() * 0.85f) * 0.1f) + 0.9f;
-            testPath.Update();
-
             Draw();
             frame++;
         }
@@ -68,7 +72,7 @@ namespace raylibTouhou
         {
             Raylib.ClearBackground(Color.BLACK);
 
-            // Raylib.DrawRectangleV(PlayAreaOrigin, PlayAreaSize, Color.LIGHTGRAY);
+            Raylib.DrawRectangleV(PlayAreaOrigin, PlayAreaSize, Color.LIGHTGRAY);
 
             for (int i = 0; ActiveBullets.Count > i; i++)
             {
@@ -78,7 +82,6 @@ namespace raylibTouhou
                     ActiveBullets.Enqueue(current);
                 }
             }
-            testPath.Draw();
 
             player.Draw();
 
