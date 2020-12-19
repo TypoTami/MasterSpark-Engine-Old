@@ -22,7 +22,8 @@ namespace raylibTouhou
             context = ImGui.CreateContext();
             ImGui.SetCurrentContext(context);
             ImGuiIOPtr io = ImGui.GetIO();
-            io.Fonts.AddFontDefault();
+            // io.Fonts.AddFontDefault();
+            io.Fonts.AddFontFromFileTTF("assets/Roboto-Regular.ttf", 18.0f);
             io.ConfigFlags = ImGuiConfigFlags.DockingEnable;
             io.ConfigDockingWithShift = true;
         }

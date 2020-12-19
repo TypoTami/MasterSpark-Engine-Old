@@ -29,7 +29,7 @@ namespace raylibTouhou
             Raylib.DrawTexturePro(atlas, frameRect, destRect, origin, 0.0f, Color.WHITE);
         }
 
-        public static void DrawSprite(Texture2D sprite, Vector2 position, float scale, float angle)
+        public static void DrawSprite(Texture2D sprite, Vector2 position, float scale, float angle, Color colour)
         {
             Vector2 spriteOrigin = new Vector2(
                 position.X - (sprite.width * 0.5f) * scale,
@@ -45,7 +45,7 @@ namespace raylibTouhou
             spriteOrigin.X = x2 + position.X;
             spriteOrigin.Y = y2 + position.Y;
 
-            Raylib.DrawTextureEx(sprite, spriteOrigin, angle, scale, Color.WHITE);
+            Raylib.DrawTextureEx(sprite, spriteOrigin, angle, scale, colour);
         }
 
         public static bool InBetweenFloat(float lower, float upper, float number)

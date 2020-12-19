@@ -26,6 +26,11 @@ namespace raylibTouhou
                     )
                 );
             }
+
+            for (int i = 0; i < Sprites.Length; i++)
+            {
+                Raylib.GenTextureMipmaps(ref Sprites[i]);
+            }
         }
 
         public void Draw()
