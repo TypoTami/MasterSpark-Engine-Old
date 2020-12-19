@@ -15,6 +15,7 @@ namespace raylibTouhou
         public static Vector2 PlayAreaSize = new Vector2(440, 520);
         public static Random random = new Random();
         public static Texture2D BulletTexture; // Make a proper texture initialisating thing at some point!
+        public static Stage CurrentStage;
 
         public static float bulletX = 240f;
         public static float bulletY = 50f;
@@ -26,31 +27,16 @@ namespace raylibTouhou
 
         public static void Init()
         {
+            CurrentStage = new Stage("TestStage");
             // Create the player
             player = new Player("Reimu");
-
-            Vector2[] testPoints = new Vector2[] {
-                new Vector2(90, 30),
-                new Vector2(130, 100),
-                new Vector2(180, 70),
-                new Vector2(230, 120),
-                new Vector2(305, 280),
-                new Vector2(295, 320),
-                new Vector2(260, 360),
-                new Vector2(160, 420)
-            };
-            string[] testSegments = new string[] {
-                "BEZIER",
-                "BEZIER",
-                "LINE"
-            };
 
             BulletTexture = Raylib.LoadTexture("assets/dagger.png");
             Raylib.GenTextureMipmaps(ref BulletTexture);
         }
         public static void MainLoop()
         {
-            if (frame % 5 == 0)
+            if (frame % 5 == -1)
             {
                 for (int i = 0; i < bulletN; i++)
                 {
@@ -82,6 +68,8 @@ namespace raylibTouhou
             Raylib.ClearBackground(Color.BLACK);
 
             Raylib.DrawRectangleV(PlayAreaOrigin, PlayAreaSize, Color.LIGHTGRAY);
+
+            CurrentStage.Draw();
 
             for (int i = 0; ActiveBullets.Count > i; i++)
             {

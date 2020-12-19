@@ -12,8 +12,12 @@ namespace raylibTouhou
         const int GameHeight = 600; 
         static int WindowWidth = 1280;
         static int WindowHeight = 720;
+        static int TargetFPS = 60;
+        static float TargetFrameTime = 1f/TargetFPS;
+        public static float TimeScalar;
         static ImguiController ImguiController = new ImguiController();
         static RenderTexture2D FrameBuffer;
+        static Queue<float> Frametimes = new Queue<float>();
         static IntPtr FrameBufferPointer;
 
         public static string CurrentScene = "MENU";
@@ -21,19 +25,26 @@ namespace raylibTouhou
         {
             // Create our window
             Raylib.SetConfigFlags(ConfigFlag.FLAG_WINDOW_RESIZABLE);
-            Raylib.InitWindow(WindowWidth, WindowHeight, "RaylibDanmaku");
+            Raylib.InitWindow(WindowWidth, WindowHeight, "MasterSpark");
             ImguiController.Load(WindowWidth, WindowHeight);
-            
-            Raylib.SetTargetFPS(60);
+            Raylib.SetTargetFPS(TargetFPS);
 
             // Initalize the menu
             Menu.Init();
 
             FrameBuffer = Raylib.LoadRenderTexture(GameWidth, GameHeight);
-            FrameBufferPointer = new IntPtr(6);
+            FrameBufferPointer = new IntPtr(8);
+            // Raylib.GenTextureMipmaps(ref FrameBuffer.texture);
+
+            Texture2D logo = Raylib.LoadTexture("assets/logo.png");
+            Raylib.GenTextureMipmaps(ref logo);
             
             while (!Raylib.WindowShouldClose())
             {
+                Raylib.SetTargetFPS(TargetFPS);
+                if (Settings.TimeWarp) { /* Raylib.SetTargetFPS(TargetFPS); */ TimeScalar = Raylib.GetFrameTime() / TargetFrameTime; }
+                else { TimeScalar = 1f; }
+
                 WindowWidth = Raylib.GetScreenWidth();
                 WindowHeight = Raylib.GetScreenHeight();
 
@@ -47,17 +58,17 @@ namespace raylibTouhou
 
                 Raylib.EndTextureMode();
 
-                Raylib.GenTextureMipmaps(ref FrameBuffer.texture);
-
                 SubmitUI();
 
                 Raylib.BeginDrawing();
                     
-                    Raylib.ClearBackground(Color.PURPLE);
-                    Raylib.DrawTexture(FrameBuffer.texture, 0, 0, Color.WHITE);
+                    Raylib.ClearBackground(Color.WHITE);
+                    // Raylib.DrawTexture(FrameBuffer.texture, 0, 0, Color.WHITE);
+                    Raylib.DrawTextureEx(logo, new Vector2(0, Raylib.GetScreenHeight() - logo.height*0.25f), 0f, 0.25f, Color.WHITE);
                     ImguiController.Draw();
 
                 Raylib.EndDrawing();
+
             }
 
             Raylib.UnloadRenderTexture(FrameBuffer);
@@ -104,11 +115,11 @@ namespace raylibTouhou
                     width = height * 4/3;
                 }
 
-                // int ptr = (int)FrameBufferPointer;
+                int ptr = (int)FrameBufferPointer;
 
-                // ImGui.SliderInt("PTR", ref ptr, 1, 15);
+                ImGui.SliderInt("PTR", ref ptr, 1, 15);
 
-                // FrameBufferPointer = new IntPtr(ptr);
+                FrameBufferPointer = new IntPtr(ptr);
 
                 ImGui.Image(
                     FrameBufferPointer,
@@ -120,15 +131,50 @@ namespace raylibTouhou
             }
 
             {
+                Frametimes.Enqueue(Raylib.GetFrameTime());
+                if (Frametimes.Count > 100) { Frametimes.Dequeue(); }
+                float[] frameArray = Frametimes.ToArray();
+
                 ImGui.Begin("Performance");
 
-                ImGui.Text($"FPS: {Raylib.GetFPS()}\t FrameTime: {Raylib.GetFrameTime()}");
+                ImGui.Text($"FPS: {Raylib.GetFPS()}\t FrameTime: {TargetFrameTime}/{Raylib.GetFrameTime()}");
+
+                ImGui.PlotLines("", ref frameArray[0], frameArray.Length);
+                ImGui.PlotLines("", ref frameArray[0], frameArray.Length, 0, null, 0f, 0.1f, new Vector2(0, 80));
+
+                ImGui.Text($"TimeScalar: {TimeScalar}");
+                ImGui.Text($"{Raylib.GetTime()}");
 
                 float framerate = ImGui.GetIO().Framerate;
                 ImGui.Text($"Application average {1000.0f / framerate:0.##} ms/frame ({framerate:0.#} FPS)");
 
+                ImGui.SliderInt("TargetFPS", ref TargetFPS, 15, 1000);
+
                 Game.SubmitUI();
 
+                ImGui.End();
+            }
+
+            {
+                ImGui.Begin("Settings");
+                    Settings.SubmitUI();
+                ImGui.End();
+            }
+
+            {
+                ImGui.ShowDemoWindow();
+            }
+
+            {
+                ImGui.BeginMainMenuBar();
+                    bool Test = ImGui.MenuItem("Test");
+                    bool About = ImGui.MenuItem("About");
+                ImGui.EndMainMenuBar();
+            }
+
+            {
+                ImGui.Begin("StageTree");
+                    Game.CurrentStage.SubmitUI();
                 ImGui.End();
             }
         }

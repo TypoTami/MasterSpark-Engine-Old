@@ -45,12 +45,13 @@ namespace raylibTouhou
 
         private void Update()
         {
-            Position = Vector2.Add(Position, Velocity);
+            Position = Vector2.Add(Position, Vector2.Multiply(Velocity, Program.TimeScalar));
             if (AngularVelocity != 0f)
             {
-                Angle += AngularVelocity;
-                Velocity.X = (float)(Velocity.X * Math.Cos(AngularVelocity) - Velocity.Y * Math.Sin(AngularVelocity));
-                Velocity.Y = (float)(Velocity.X * Math.Sin(AngularVelocity) + Velocity.Y * Math.Cos(AngularVelocity));
+                float AngularVelocityCorrected = AngularVelocity * Program.TimeScalar;
+                Angle += AngularVelocityCorrected;
+                Velocity.X = (float)(Velocity.X * Math.Cos(AngularVelocityCorrected) - Velocity.Y * Math.Sin(AngularVelocityCorrected));
+                Velocity.Y = (float)(Velocity.X * Math.Sin(AngularVelocityCorrected) + Velocity.Y * Math.Cos(AngularVelocityCorrected));
             }
         }
 
@@ -60,7 +61,7 @@ namespace raylibTouhou
                 Position.X - (Game.BulletTexture.width / 2f) * 0.25f,
                 Position.Y - (Game.BulletTexture.height / 2f) * 0.25f
             );
-            Raylib.DrawTextureEx(Game.BulletTexture, TexOrigin, Angle * (float)(180/Math.PI), 0.25f, Color.WHITE);  
+            Raylib.DrawTextureEx(Game.BulletTexture, TexOrigin, Angle * (float)(180/Math.PI), 0.25f, Color.WHITE);
 
             // Raylib.DrawCircleV(Position, 5.0f, colour);
             // Raylib.DrawText($"{Position}", Convert.ToInt32(Position.X)+5, Convert.ToInt32(Position.Y)+5, 5, Color.BLACK);
