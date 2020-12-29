@@ -20,7 +20,7 @@ namespace raylibTouhou
         public static float bulletX = 240f;
         public static float bulletY = 50f;
         public static float bulletAngle = 0f;
-        public static float bulletVelocity = 1.5f;
+        public static float bulletVelocity = 1.2f;
         public static int bulletN = 4;
         public static float bulletSpread = 0.5f;
         public static float bulletAngular = 0f;
@@ -36,7 +36,7 @@ namespace raylibTouhou
         }
         public static void MainLoop()
         {
-            if (frame % 5 == -1)
+            if (frame % 30 == 0)
             {
                 for (int i = 0; i < bulletN; i++)
                 {
@@ -51,6 +51,7 @@ namespace raylibTouhou
                         new LinearBullet(
                             new Vector2(/* (float)Math.Sin(Raylib.GetTime() * 10) * 1  + */ bulletX, bulletY), 
                             (float)(Math.PI/180) * bulletAngle,
+                            Raylib.ColorFromHSV(new Vector3((float)Raylib.GetTime()*20f, 0.6f, 1f)),
                             bulletVelocity,
                             (float)(Math.PI/180) * i/(float)bulletN * bulletSpread - (bulletSpread/200f) + bulletAngular
                         )
@@ -65,7 +66,8 @@ namespace raylibTouhou
         }
         private static void Draw()
         {
-            Raylib.ClearBackground(Color.BLACK);
+            // Raylib.ClearBackground(Color.PURPLE);
+            Raylib.DrawRectangle(0, 0, 800, 600, Color.PURPLE);
 
             Raylib.DrawRectangleV(PlayAreaOrigin, PlayAreaSize, Color.LIGHTGRAY);
 
@@ -81,10 +83,6 @@ namespace raylibTouhou
             }
 
             player.Draw();
-
-            Raylib.DrawText($"Active bullets: \t{ActiveBullets.Count}\n {PlayAreaOrigin}, {PlayAreaSize}", 10, 40, 20, Color.RED);
-            
-            Raylib.DrawText($"FPS: {Raylib.GetFPS()}\t FrameTime: {Raylib.GetFrameTime()}", 10, 10, 20, Color.GREEN);
         }
     
         public static void SubmitUI()

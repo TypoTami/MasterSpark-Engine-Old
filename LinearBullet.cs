@@ -10,9 +10,9 @@ namespace raylibTouhou
         private Vector2 Velocity;
         private float AngularVelocity;
         private float Angle;
-        private Color colour;
+        private Color Colour;
 
-        public LinearBullet(Vector2 position, float angle, float velocity = 0.0f, float angularVelocity = 0.0f)
+        public LinearBullet(Vector2 position, float angle, Color color, float velocity = 0.0f, float angularVelocity = 0.0f)
         {
             Position = position;
             Velocity = new Vector2(
@@ -24,7 +24,7 @@ namespace raylibTouhou
             Angle = angle;
 
             int hex = Game.random.Next(0x000000f, 0x00f00ff);
-            colour = Raylib.GetColor(hex);
+            this.Colour = color;
         }
 
         public bool UpdateDraw()
@@ -45,10 +45,10 @@ namespace raylibTouhou
 
         private void Update()
         {
-            Position = Vector2.Add(Position, Vector2.Multiply(Velocity, Program.TimeScalar));
+            Position = Vector2.Add(Position, Velocity);
             if (AngularVelocity != 0f)
             {
-                float AngularVelocityCorrected = AngularVelocity * Program.TimeScalar;
+                float AngularVelocityCorrected = AngularVelocity;
                 Angle += AngularVelocityCorrected;
                 Velocity.X = (float)(Velocity.X * Math.Cos(AngularVelocityCorrected) - Velocity.Y * Math.Sin(AngularVelocityCorrected));
                 Velocity.Y = (float)(Velocity.X * Math.Sin(AngularVelocityCorrected) + Velocity.Y * Math.Cos(AngularVelocityCorrected));
@@ -61,7 +61,7 @@ namespace raylibTouhou
                 Position.X - (Game.BulletTexture.width / 2f) * 0.25f,
                 Position.Y - (Game.BulletTexture.height / 2f) * 0.25f
             );
-            Raylib.DrawTextureEx(Game.BulletTexture, TexOrigin, Angle * (float)(180/Math.PI), 0.25f, Color.WHITE);
+            Raylib.DrawTextureEx(Game.BulletTexture, TexOrigin, Angle * (float)(180/Math.PI), 0.3f, Colour);
 
             // Raylib.DrawCircleV(Position, 5.0f, colour);
             // Raylib.DrawText($"{Position}", Convert.ToInt32(Position.X)+5, Convert.ToInt32(Position.Y)+5, 5, Color.BLACK);

@@ -9,8 +9,8 @@ namespace raylibTouhou
     class Stage
     {
         private string Name;
-        private List<Entity> Entities = new List<Entity>();
-        private Texture2D[] Sprites = { Raylib.LoadTexture("assets/dagger.png"), Raylib.LoadTexture("assets/logo.png") };
+        public List<Entity> Entities = new List<Entity>();
+        private Texture2D[] Sprites = { Raylib.LoadTexture("assets/Square.png"), Raylib.LoadTexture("assets/logo.png") };
 
         public Stage(string name)
         {
@@ -41,17 +41,20 @@ namespace raylibTouhou
             }
         }
 
+        public int EntitySelection = 2;
         public void SubmitUI()
         {
             if (ImGui.TreeNode($"Stage: {Name}"))
             {
                 for (int i = 0; i < Entities.Count; i++)
                 {
-                    Entities[i].SubmitUI();
+                    if (ImGui.Selectable($"Entity: {Entities[i].Name}", EntitySelection == i))
+                    {
+                        EntitySelection = i;
+                    }
                 }
-                // ImGui.TreePop();
+                ImGui.TreePop();
             }
-            ImGui.TreePop();
         }
     }
 }

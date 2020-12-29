@@ -23,7 +23,7 @@ namespace raylibTouhou
 
         public void Update()
         {
-            float moveSpeed = 3.0f * Program.TimeScalar;
+            float moveSpeed = 3.0f;
 
             if (Raylib.IsKeyDown(KeyboardKey.KEY_LEFT_SHIFT))
             {
