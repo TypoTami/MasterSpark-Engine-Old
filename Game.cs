@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Raylib_cs;
 using ImGuiNET;
 
-namespace raylibTouhou
+namespace MasterSpark
 {
     static class Game
     {
@@ -60,6 +60,8 @@ namespace raylibTouhou
             }
 
             player.Update();
+
+            CurrentStage.Update();
             
             Draw();
             frame++;

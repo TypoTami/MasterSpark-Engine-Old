@@ -2,7 +2,7 @@ using System;
 using System.Numerics;
 using Raylib_cs;
 
-namespace raylibTouhou
+namespace MasterSpark
 {
     class Player
     {

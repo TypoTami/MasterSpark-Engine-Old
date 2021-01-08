@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using ImGuiNET;
 using Raylib_cs;
 
-namespace raylibTouhou
+namespace MasterSpark
 {
     class GUI
     {
@@ -137,6 +137,14 @@ namespace raylibTouhou
             {
                 ImGui.Begin("Console");
                     Console.SubmitUI();
+                ImGui.End();
+            }
+
+            {
+                ImGui.Begin("Camera");
+                    ImGui.SliderFloat("Angle", ref Program.camera.rotation, -360f, 360f);
+                    ImGui.SliderFloat("X", ref Program.camera.target.X, -800f, 800f);
+                    ImGui.SliderFloat("Y", ref Program.camera.target.Y, -800f, 800f);
                 ImGui.End();
             }
         }

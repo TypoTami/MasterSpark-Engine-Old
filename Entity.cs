@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Raylib_cs;
 using ImGuiNET;
 
-namespace raylibTouhou
+namespace MasterSpark
 {
     class Entity
     {
@@ -30,6 +30,18 @@ namespace raylibTouhou
                 this.SpriteColour = Raylib.ColorFromHSV(new Vector3((float)Raylib.GetTime()*100f, 0.6f, 1f));
                 Helpers.DrawSprite(this.Sprite, this.Position, this.SpriteScale, this.SpriteAngle, this.SpriteColour);
             }
+        }
+
+        public void Move(float x, float y)
+        {
+            this.Position.X += x;
+            this.Position.Y += y;
+        }
+
+        public void SetPosition(float x, float y)
+        {
+            this.Position.X = x;
+            this.Position.Y = y;
         }
 
         public void SubmitUI()

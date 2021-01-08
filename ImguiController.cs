@@ -5,7 +5,7 @@ using ImGuiNET;
 
 // ImguiController from https://github.com/ChrisDill/Raylib-cs-Examples
 
-namespace raylibTouhou
+namespace MasterSpark
 {
     /// <summary>
     /// ImGui controller for Raylib-cs.
@@ -22,9 +22,9 @@ namespace raylibTouhou
             context = ImGui.CreateContext();
             ImGui.SetCurrentContext(context);
             ImGuiIOPtr io = ImGui.GetIO();
-            // io.Fonts.AddFontDefault();
+            io.Fonts.AddFontDefault();
             // io.Fonts.AddFontFromFileTTF("assets/Px437_IBM_VGA_8x16.ttf", 16.0f);
-            io.Fonts.AddFontFromFileTTF("assets/Roboto-Regular.ttf", 18.0f);
+            // io.Fonts.AddFontFromFileTTF("assets/Roboto-Regular.ttf", 18.0f);
             io.ConfigFlags = ImGuiConfigFlags.DockingEnable;
             io.ConfigDockingWithShift = true;
         }

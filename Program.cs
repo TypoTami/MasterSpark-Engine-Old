@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Raylib_cs;
 using ImGuiNET;
 
-namespace raylibTouhou
+namespace MasterSpark
 {
     class Program
     {
