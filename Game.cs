@@ -60,8 +60,6 @@ namespace MasterSpark
             }
 
             player.Update();
-
-            CurrentStage.Update();
             
             Draw();
             frame++;

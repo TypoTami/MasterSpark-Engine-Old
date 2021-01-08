@@ -2,7 +2,6 @@ using System;
 using System.Numerics;
 using System.Collections.Generic;
 using Raylib_cs;
-using NLua;
 using ImGuiNET;
 
 namespace MasterSpark
@@ -12,7 +11,6 @@ namespace MasterSpark
         private string Name;
         public List<Entity> Entities = new List<Entity>();
         private Texture2D[] Sprites = { Raylib.LoadTexture("assets/Square.png"), Raylib.LoadTexture("assets/logo.png") };
-        private Lua testScript = new Lua();
         public Stage(string name)
         {
             this.Name = name;
@@ -33,17 +31,8 @@ namespace MasterSpark
                 Raylib.GenTextureMipmaps(ref Sprites[i]);
             }
             
-            testScript.LoadCLRPackage();
-            testScript.DoFile("scripts/test.lua");
-            testScript["Entities"] = Entities;
-            // testScript["ScriptHelpers"] = new ScriptHelpers();
         }
         
-        public void Update()
-        {
-            // testScript.GetFunction("Update").Call((float)Raylib.GetTime());
-        }
-
         public void Draw()
         {
             for (int i = 0; i < Entities.Count; i++)
