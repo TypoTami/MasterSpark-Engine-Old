@@ -28,7 +28,7 @@ namespace MasterSpark
             if (!SkipDraw)
             {
                 this.SpriteColour = Raylib.ColorFromHSV(new Vector3((float)Raylib.GetTime()*100f, 0.6f, 1f));
-                Helpers.DrawSprite(this.Sprite, this.Position, this.SpriteScale, this.SpriteAngle, this.SpriteColour);
+                Helpers.DrawSprite(this.Sprite, this.Position, this.SpriteScale, (this.SpriteAngle * (float)(Math.PI/180)), this.SpriteColour);
             }
         }
 

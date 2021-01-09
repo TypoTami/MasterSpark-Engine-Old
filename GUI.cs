@@ -99,10 +99,6 @@ namespace MasterSpark
                 float framerate = ImGui.GetIO().Framerate;
                 ImGui.Text($"Application average {1000.0f / framerate:0.##} ms/frame ({framerate:0.#} FPS)");
 
-                ImGui.SliderInt("RenderHeight", ref Program.RenderHeight, 600, 1080*4);
-                Program.RenderWidth = Convert.ToInt32(Program.RenderHeight / 0.75f);
-                Program.camera.zoom = Program.RenderHeight/600f;
-
                 Game.SubmitUI();
 
                 ImGui.End();
@@ -135,16 +131,15 @@ namespace MasterSpark
             }
 
             {
-                ImGui.Begin("Console");
-                    Console.SubmitUI();
+                ImGui.Begin("CameraController");
+                    Program.MainCamera.SubmitUI();
+                    Game.GameCamera.SubmitUI();
                 ImGui.End();
             }
 
             {
-                ImGui.Begin("Camera");
-                    ImGui.SliderFloat("Angle", ref Program.camera.rotation, -360f, 360f);
-                    ImGui.SliderFloat("X", ref Program.camera.target.X, -800f, 800f);
-                    ImGui.SliderFloat("Y", ref Program.camera.target.Y, -800f, 800f);
+                ImGui.Begin("Console");
+                    Console.SubmitUI();
                 ImGui.End();
             }
         }

@@ -8,20 +8,21 @@ namespace MasterSpark
 {
     static class Game
     {
+        public static RenderController GameCamera;
         public static int frame = 0;
         static Player player;
         static Queue<LinearBullet> ActiveBullets = new Queue<LinearBullet>();
-        public static Vector2 PlayAreaOrigin = new Vector2(40, 40);
-        public static Vector2 PlayAreaSize = new Vector2(440, 520);
+        public static Vector2 PlayAreaOrigin = new Vector2(20, 20);
+        public static Vector2 PlayAreaSize = new Vector2(600, 700);
         public static Random random = new Random();
         public static Texture2D BulletTexture; // Make a proper texture initialisating thing at some point!
         public static Stage CurrentStage;
 
         public static float bulletX = 240f;
         public static float bulletY = 50f;
-        public static float bulletAngle = 0f;
+        public static float bulletRadian = 0f;
         public static float bulletVelocity = 1.2f;
-        public static int bulletN = 4;
+        public static int bulletN = 5;
         public static float bulletSpread = 0.5f;
         public static float bulletAngular = 0f;
 
@@ -33,8 +34,15 @@ namespace MasterSpark
 
             BulletTexture = Raylib.LoadTexture("assets/dagger.png");
             Raylib.GenTextureMipmaps(ref BulletTexture);
+
+            GameCamera = new RenderController(
+                PlayAreaSize,
+                new Vector2(600, 700),
+                1f,
+                true
+            );
         }
-        public static void MainLoop()
+        public static void Update()
         {
             if (frame % 30 == 0)
             {
@@ -49,26 +57,38 @@ namespace MasterSpark
                     // );
                     ActiveBullets.Enqueue(
                         new LinearBullet(
-                            new Vector2(/* (float)Math.Sin(Raylib.GetTime() * 10) * 1  + */ bulletX, bulletY), 
-                            (float)(Math.PI/180) * bulletAngle,
+                            new Vector2(bulletX, bulletY), 
+                            (float)(Math.PI/12 * (i - (bulletN/2))),
                             Raylib.ColorFromHSV(new Vector3((float)Raylib.GetTime()*20f, 0.6f, 1f)),
-                            bulletVelocity,
-                            (float)(Math.PI/180) * i/(float)bulletN * bulletSpread - (bulletSpread/200f) + bulletAngular
+                            bulletVelocity
                         )
                     );
                 }
+                // ActiveBullets.Enqueue(
+                //     new LinearBullet(
+                //         new Vector2(bulletX, bulletY), 
+                //         bulletRadian,
+                //         Raylib.ColorFromHSV(new Vector3((float)Raylib.GetTime()*20f, 0.6f, 1f)),
+                //         bulletVelocity
+                //     )
+                // );
+                // ActiveBullets.Enqueue(
+                //     new LinearBullet(
+                //         new Vector2(bulletX, bulletY), 
+                //         bulletRadian,
+                //         Raylib.ColorFromHSV(new Vector3((float)Raylib.GetTime()*20f, 0.6f, 1f)),
+                //         bulletVelocity,
+                //         (float)(1f/800f * Math.PI)
+                //     )
+                // );
             }
 
             player.Update();
             
-            Draw();
             frame++;
         }
-        private static void Draw()
+        public static void Draw()
         {
-            // Raylib.ClearBackground(Color.PURPLE);
-            Raylib.DrawRectangle(0, 0, 800, 600, Color.PURPLE);
-
             Raylib.DrawRectangleV(PlayAreaOrigin, PlayAreaSize, Color.LIGHTGRAY);
 
             CurrentStage.Draw();

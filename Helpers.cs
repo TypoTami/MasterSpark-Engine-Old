@@ -6,9 +6,9 @@ namespace MasterSpark
 {
     static class Helpers
     {
-        static private Rectangle frameRect;
-        static private Rectangle destRect;
-        static private Vector2 origin = new Vector2(0, 0);
+        private static Rectangle frameRect;
+        private static Rectangle destRect;
+        private static Vector2 origin = new Vector2(0, 0);
 
         public static void DrawFromAtlas(Texture2D atlas, Vector2 position, float scale, int totalFrames, bool flipped, int frame)
         {
@@ -29,7 +29,7 @@ namespace MasterSpark
             Raylib.DrawTexturePro(atlas, frameRect, destRect, origin, 0.0f, Color.WHITE);
         }
 
-        public static void DrawSprite(Texture2D sprite, Vector2 position, float scale, float angle, Color colour)
+        public static void DrawSprite(Texture2D sprite, Vector2 position, float scale, float radians, Color colour)
         {
             Vector2 spriteOrigin = new Vector2(
                 position.X - (sprite.width * 0.5f) * scale,
@@ -39,13 +39,13 @@ namespace MasterSpark
             float x1 = spriteOrigin.X - position.X;
             float y1 = spriteOrigin.Y - position.Y;
 
-            float x2 = x1 * (float)Math.Cos(angle * (float)(Math.PI/180)) - y1 * (float)Math.Sin(angle * (float)(Math.PI/180));
-            float y2 = x1 * (float)Math.Sin(angle * (float)(Math.PI/180)) + y1 * (float)Math.Cos(angle * (float)(Math.PI/180));
+            float x2 = x1 * (float)Math.Cos(radians) - y1 * (float)Math.Sin(radians);
+            float y2 = x1 * (float)Math.Sin(radians) + y1 * (float)Math.Cos(radians);
 
             spriteOrigin.X = x2 + position.X;
             spriteOrigin.Y = y2 + position.Y;
 
-            Raylib.DrawTextureEx(sprite, spriteOrigin, angle, scale, colour);
+            Raylib.DrawTextureEx(sprite, spriteOrigin, radians * (float)(180/Math.PI), scale, colour);
         }
 
         public static bool InBetweenFloat(float lower, float upper, float number)

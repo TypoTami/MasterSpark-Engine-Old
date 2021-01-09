@@ -11,17 +11,19 @@ namespace MasterSpark
         private float AngularVelocity;
         private float Angle;
         private Color Colour;
+        private float HitboxRadius;
 
-        public LinearBullet(Vector2 position, float angle, Color color, float velocity = 0.0f, float angularVelocity = 0.0f)
+        public LinearBullet(Vector2 position, float angle, Color color, float velocity = 0.0f, float angularVelocity = 0.0f, float hitboxRadius = 5f)
         {
-            Position = position;
-            Velocity = new Vector2(
+            this.Position = position;
+            this.Velocity = new Vector2(
                 (float)Math.Cos(angle + (Math.PI/2)) * velocity,
                 (float)Math.Sin(angle + (Math.PI/2)) * velocity
             );
-            AngularVelocity = angularVelocity;
+            this.AngularVelocity = angularVelocity;
 
-            Angle = angle;
+            this.Angle = angle;
+            this.HitboxRadius = hitboxRadius;
 
             int hex = Game.random.Next(0x000000f, 0x00f00ff);
             this.Colour = color;
@@ -61,11 +63,10 @@ namespace MasterSpark
                 Position.X - (Game.BulletTexture.width / 2f) * 0.25f,
                 Position.Y - (Game.BulletTexture.height / 2f) * 0.25f
             );
-            Raylib.DrawTextureEx(Game.BulletTexture, TexOrigin, Angle * (float)(180/Math.PI), 0.3f, Colour);
+            Helpers.DrawSprite(Game.BulletTexture, Position, 0.3f, Angle, Colour);
 
-            // Raylib.DrawCircleV(Position, 5.0f, colour);
-            // Raylib.DrawText($"{Position}", Convert.ToInt32(Position.X)+5, Convert.ToInt32(Position.Y)+5, 5, Color.BLACK);
-            // Raylib.DrawText($"{Velocity.X}\n{Velocity.Y}", 500, 500, 5, Color.RED);
+            if (Settings.DEBUGShowHitbox) { Raylib.DrawCircle((int)Position.X, (int)Position.Y, HitboxRadius, new Color(0, 255, 0, 80)); }
+
         }
     }
 }
